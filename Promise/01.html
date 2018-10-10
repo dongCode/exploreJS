@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise01</title>
+</head>
+
+<body>
+    <p>02demo</p>
+    <div id="test-promise-log2"></div>
+    <hr/>
+    <p>03demo</p>
+    <div id="test-promise-log3"></div>
+    <hr/>
+    <p>04demo</p>
+    <div id="test-promise-log4"></div>
+    <script>
+        function log(text) {
+            console.log(text)
+        }
+
+        function logToHtml(text,el) {
+                const p = document.createElement('p')
+                p.innerHTML = text
+                el.appendChild(p)
+        }
+
+        {   //廖雪峰 01
+            function test(resolve, reject) {
+                let randomNumber = Math.random() * 2
+                log('01demo')
+                log(`start: ${randomNumber}`)
+                setTimeout(() => {
+                    if (randomNumber < 1) {
+                        log('resolve')
+                        resolve('200')
+                    } else {
+                        log('reject')
+                        reject('500')
+                    }
+                }, randomNumber * 1000)
+            }
+
+            let p1 = new Promise(test)
+            p1.then((result) => {
+                log(result)
+            }).catch((error) => {
+                log(error)
+            })
+        }
+
+
+
+        {   //廖雪峰 02
+            let logging = document.getElementById('test-promise-log2')
+            
+            function test(resolve, reject) {
+                let randomNumber = Math.random() * 2
+                logToHtml(`start: ${randomNumber}`, logging)
+                setTimeout(() => {
+                    if (randomNumber < 1) {
+                        logToHtml('resolve', logging)
+                        resolve('200')
+                    } else {
+                        logToHtml('reject', logging)
+                        reject('500')
+                    }
+                }, randomNumber * 1000)
+            }
+
+            let p1 = new Promise(test)
+            p1.then((result) => {
+                logToHtml(result, logging)
+            }).catch((error) => {
+                logToHtml(error, logging)
+            })
+        }
+        
+        {   //廖雪峰 03 链式操作
+            let logging = document.getElementById('test-promise-log3')
+            let multiply = (input) => {
+                return new Promise((resolve, reject) => {
+                    logToHtml(`multiply: ${input} X ${input} ....`, logging)
+                    setTimeout(resolve, 500, input * input)
+                })
+            }
+            let add = (input) => {
+                return new Promise((resolve, reject) => {
+                    logToHtml(`add: ${input} + ${input} ....`, logging)
+                    setTimeout(resolve, 500, input + input)
+                })
+            }
+            let calculate = new Promise((resolve, reject) => {
+                logToHtml(`start`, logging)
+                setTimeout(() => { //这里是异步操作
+                    resolve(2)
+                }, 500)
+            })
+            calculate.then(multiply).then(add).then(add)
+        }
+
+         {   //廖雪峰 04 AJAX操作
+            let logging = document.getElementById('test-promise-log4')
+            let ajax = (option) => {               
+                return new Promise((resolve, reject) => {
+                    let request = new XMLHttpRequest()
+                    request.onreadystatechange= () => {
+                        if(request.readyState === 4) {
+                            if(request.status === 200) {
+                                resolve(request.responseText)
+                            } else {
+                                reject(request.status)
+                            }
+                        } 
+                    }
+                    request.open(option.method, option.url)
+                    request.send(option.data)
+                })
+            }
+            let ajax1 = ajax({
+                method: 'GET',
+                url: '/api/categories'               
+            })
+            ajax1.then((text) => {
+               logToHtml(text, logging)
+            }).catch((error) => {
+                logToHtml(`error: ${error}`, logging)
+            })
+        }
+
+
+    </script>
+</body>
+
+</html>
