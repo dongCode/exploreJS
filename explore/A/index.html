@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>趣题</title>
+</head>
+
+<body>
+    <p>Question:</p>
+    <ol>
+        <li>
+            求用十进制、二进制、八进制表示都是回文数的所有数字中，大于十进制数10的最小值
+        </li>
+        <li>
+            1000~9999内符合在任意位置插入乘号计算后的结果是相应数字的回文的数
+        </li>
+    </ol>
+    <script>
+
+        function reverseStr(num, radix = 10) {
+            return num.toString(radix).split('').reverse().join('')
+        }
+
+        { //01 回文
+            let min = 11
+        function isHuiwen(num, radix = 10) {
+            return reverseStr(num, radix) === num.toString(radix)
+        }
+        
+        function findMin(min) {
+            let finded = false
+            while (!finded) {
+                if (isHuiwen(min) && isHuiwen(min, 2) && isHuiwen(min, 8)) {
+                    finded = true
+                    return min
+                } else {
+                    min += 2
+                }
+            }
+        }
+        console.log(findMin(11)) // 585
+        }
+        
+        { // 02  1000 ~ 9999 
+           let min = 1
+           let max = 9999
+           let res = []
+           let isEqual = (num) => {
+               let reverse = reverseStr(num)
+               let str = num.toString()
+               if(Number(reverse).toString().length !==reverse.length) {
+                   return
+               }               
+               for(let i = 0; i < str.length; i++) {
+                   let multiply_num = Number(str.substr(0, i)) * Number(str.substr(i-str.length))
+                   if(multiply_num.toString().length === reverse.length && multiply_num.toString() === reverse) {
+                       return num
+                   } 
+               }
+           }
+           for(let i = min; i<=max; i++) {
+               if(isEqual(i)) {
+                   res.push(i)
+               }
+           }
+           console.log(res, isEqual(351))
+        }
+    </script>
+</body>
+
+</html>
