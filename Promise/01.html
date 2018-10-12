@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Promise01</title>
+    <title>01 廖雪峰</title>
 </head>
 
 <body>
@@ -20,17 +20,9 @@
     <hr />
     <p>05demo</p>
     <div id="test-promise-log5"></div>
+    <script src="./common.js"></script>
     <script>
-        function log(text) {
-            console.log(text)
-        }
-
-        function logToHtml(text, el) {
-            const p = document.createElement('p')
-            p.innerHTML = text
-            el.appendChild(p)
-        }
-
+       
         {   //廖雪峰 01
             function test(resolve, reject) {
                 let randomNumber = Math.random() * 2

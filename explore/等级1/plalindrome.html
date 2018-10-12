@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>回文趣题</title>
+</head>
+
+<body>
+    <p>Question:</p>
+    <ol>
+        <li>
+            求用十进制、二进制、八进制表示都是回文数的所有数字中，大于十进制数10的最小值
+        </li>
+    </ol>
+    <script>
+        let min = 11
+        function isHuiwen(num, radix = 10) {
+            return reverseNum(num, radix) === num.toString(radix)
+        }
+        function reverseNum(num, radix) {
+            return num.toString(radix).split('').reverse().join('')
+        }
+        function findMin(min) {
+            let finded = false
+            while (!finded) {
+                if (isHuiwen(min) && isHuiwen(min, 2) && isHuiwen(min, 8)) {
+                    finded = true
+                    return min
+                } else {
+                    min += 2
+                }
+            }
+        }
+        console.log(findMin(11))
+    </script>
+</body>
+
+</html>

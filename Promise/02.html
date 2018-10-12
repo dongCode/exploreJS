@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02 阮一峰</title>
+</head>
+
+<body>
+    <ol>
+        <li id="test-promise-log1"></li>
+    </ol>
+    <script src="./common.js"></script>
+    <script>
+
+        { // 01
+            let logEl = getEl('#test-promise-log1')
+            function timeout(ms) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve('done')
+                    }, ms);
+                })
+            }
+            timeout(100).then((text) => {
+                logToHtml(text, logEl)
+            })
+        }
+
+    </script>
+</body>
+
+</html>
