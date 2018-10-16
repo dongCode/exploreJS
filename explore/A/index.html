@@ -26,47 +26,73 @@
 
         { //01 回文
             let min = 11
-        function isHuiwen(num, radix = 10) {
-            return reverseStr(num, radix) === num.toString(radix)
-        }
-        
-        function findMin(min) {
-            let finded = false
-            while (!finded) {
-                if (isHuiwen(min) && isHuiwen(min, 2) && isHuiwen(min, 8)) {
-                    finded = true
-                    return min
-                } else {
-                    min += 2
+            function isHuiwen(num, radix = 10) {
+                return reverseStr(num, radix) === num.toString(radix)
+            }
+
+            function findMin(min) {
+                let finded = false
+                while (!finded) {
+                    if (isHuiwen(min) && isHuiwen(min, 2) && isHuiwen(min, 8)) {
+                        finded = true
+                        return min
+                    } else {
+                        min += 2
+                    }
                 }
             }
+            console.log(findMin(11)) // 585
         }
-        console.log(findMin(11)) // 585
-        }
-        
+
         { // 02  1000 ~ 9999 
-           let min = 1
-           let max = 9999
-           let res = []
-           let isEqual = (num) => {
-               let reverse = reverseStr(num)
-               let str = num.toString()
-               if(Number(reverse).toString().length !==reverse.length) {
-                   return
-               }               
-               for(let i = 0; i < str.length; i++) {
-                   let multiply_num = Number(str.substr(0, i)) * Number(str.substr(i-str.length))
-                   if(multiply_num.toString().length === reverse.length && multiply_num.toString() === reverse) {
-                       return num
-                   } 
-               }
-           }
-           for(let i = min; i<=max; i++) {
-               if(isEqual(i)) {
-                   res.push(i)
-               }
-           }
-           console.log(res, isEqual(351))
+            let min = 1
+            let max = 9999
+            let res = []
+            let isEqual = (num) => {
+                let reverse = reverseStr(num)
+                let str = num.toString()
+                if (Number(reverse).toString().length !== reverse.length) {
+                    return
+                }
+                if (oneX(str, reverse)) {
+                    return num
+                }
+                if (twoX(str, reverse)) {
+                    return num
+                }
+                if (threeX(str, reverse)) {
+                    return num
+                }
+            }
+            for (let i = min; i <= max; i++) {
+                if (isEqual(i)) {
+                    res.push(i)
+                }
+            }
+            function oneX(str, reverse) {
+                for (let i = 0; i < str.length; i++) {
+                    let multiply_num = Number(str.substr(0, i)) * Number(str.substr(i - str.length))
+                    if (multiply_num.toString().length === reverse.length && multiply_num.toString() === reverse) {
+                        return true
+                    }
+                }
+            }
+            function twoX(str, reverse) {
+                // substr(from, length)
+                let multiply_num1 = Number(str.substr(0, 1)) * Number(str.substr(1, 1)) * Number(str.substr(2))
+                let multiply_num2 = Number(str.substr(0, 1)) * Number(str.substr(1, 2)) * Number(str.substr(3))
+                let multiply_num3 = Number(str.substr(0, 2)) * Number(str.substr(2, 1)) * Number(str.substr(3))
+                if ( multiply_num1.toString() === reverse ||  multiply_num2.toString() === reverse || multiply_num3.toString() === reverse ) {
+                    return true
+                }
+            }
+            function threeX(str, reverse) {
+                let multiply_num = Number(str.substr(0, 1)) * Number(str.substr(1, 1)) * Number(str.substr(2, 1)) * Number(str.substr(3, 1))             
+                if ( multiply_num.toString() === reverse) {
+                    return true
+                }
+            }
+            console.log(res)
         }
     </script>
 </body>
