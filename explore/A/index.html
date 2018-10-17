@@ -17,6 +17,9 @@
         <li>
             1000~9999内符合在任意位置插入乘号计算后的结果是相应数字的回文的数
         </li>
+        <li>
+            1~100的翻牌问题 背面朝上
+        </li>
     </ol>
     <script>
 
@@ -82,17 +85,40 @@
                 let multiply_num1 = Number(str.substr(0, 1)) * Number(str.substr(1, 1)) * Number(str.substr(2))
                 let multiply_num2 = Number(str.substr(0, 1)) * Number(str.substr(1, 2)) * Number(str.substr(3))
                 let multiply_num3 = Number(str.substr(0, 2)) * Number(str.substr(2, 1)) * Number(str.substr(3))
-                if ( multiply_num1.toString() === reverse ||  multiply_num2.toString() === reverse || multiply_num3.toString() === reverse ) {
+                if (multiply_num1.toString() === reverse || multiply_num2.toString() === reverse || multiply_num3.toString() === reverse) {
                     return true
                 }
             }
             function threeX(str, reverse) {
-                let multiply_num = Number(str.substr(0, 1)) * Number(str.substr(1, 1)) * Number(str.substr(2, 1)) * Number(str.substr(3, 1))             
-                if ( multiply_num.toString() === reverse) {
+                let multiply_num = Number(str.substr(0, 1)) * Number(str.substr(1, 1)) * Number(str.substr(2, 1)) * Number(str.substr(3, 1))
+                if (multiply_num.toString() === reverse) {
                     return true
                 }
             }
             console.log(res)
+        }
+
+        { //03 翻牌问题
+            function haveNumber() {
+                let obj = {}, res = []
+                for (let i = 1; i <= 100; i++) {
+                    for (let j = i; j <= 100; j += i) {
+                        if (j in obj) {
+                            obj[j] = !obj[j]
+                        } else {
+                            obj[j] = true
+                        }
+                    }
+                }
+                for (let key in obj) {
+                    if (obj[key]) {
+                        res.push(key)
+                    }
+                }
+                console.log(obj)
+                return res
+            }
+            console.log(haveNumber())
         }
     </script>
 </body>
