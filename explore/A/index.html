@@ -20,6 +20,12 @@
         <li>
             1~100的翻牌问题 背面朝上
         </li>
+        <li>
+            切木棍问题
+        </li>
+        <li>
+            凑钱
+        </li>
     </ol>
     <script>
 
@@ -115,10 +121,75 @@
                         res.push(key)
                     }
                 }
-                console.log(obj)
                 return res
             }
-            console.log(haveNumber())
+            console.log('翻牌问题：', haveNumber())
+        }
+
+        { //04 切木棍
+            function cutbar(person, count, bar_number) {
+                if (count <= bar_number) {
+                    return 0
+                } else if (bar_number < person) {
+                    return 1 + cutbar(person, count, bar_number * 2)
+                } else {
+                    return 1 + cutbar(person, count, bar_number + person)
+                }
+            }
+            console.log('切木棍：', cutbar(3, 20, 1), cutbar(5, 100, 1))
+        }
+        { //04 凑钱 method01 四重循环效率太低 可扩展性太差
+            function collect_money() {
+                const count = 1000
+                const money_numbers = {
+                    500: 2,
+                    100: 10,
+                    50: 15,
+                    10: 15
+                }
+                let methods = 0
+                for (let i = 0; i <= money_numbers[500]; i++) {                  
+                    for (let j = 0; j <= money_numbers[100]; j++) {                       
+                        for (let n = 0; n <= money_numbers[50]; n++) {                           
+                            for (let q = 0; q <= money_numbers[50]; q++) {
+                                if ((500 * i + 100 * j + 50 * n + 10 * q) === 1000 && ( (i + j + n + q ) <= 15) ) {
+                                    methods++                                                                         
+                                }
+                            }
+                        }
+                    }
+                }
+                return methods
+            }
+            console.log('凑钱1：', collect_money())
+            
+        }
+        { //05 考拉兹猜想 
+            function collect() {
+                const max = 10000
+                const res = []
+                for(let i = 2; i <= 10000; i+= 2) {
+                    let n = i * 3 + 1
+                    let finded = false
+                    while(!finded) {
+                        if(n % 2 === 0) {
+                            n = n / 2
+                        } else {
+                            n = n * 3 + 1
+                        }
+                        if(n === 1) {
+                            finded = true
+                        }
+                        if(n === i) {
+                            finded = true
+                            res.push(i)
+                        }
+                    }
+                }
+                return res
+            }
+            console.log('猜想：', collect())
+            
         }
     </script>
 </body>
