@@ -26,6 +26,9 @@
         <li>
             凑钱
         </li>
+        <li>
+            扫地机器人
+        </li>
     </ol>
     <script>
 
@@ -170,26 +173,37 @@
                 const res = []
                 for(let i = 2; i <= 10000; i+= 2) {
                     let n = i * 3 + 1
-                    let finded = false
-                    while(!finded) {
-                        if(n % 2 === 0) {
-                            n = n / 2
-                        } else {
-                            n = n * 3 + 1
-                        }
-                        if(n === 1) {
-                            finded = true
-                        }
+                    while(n !== 1 && n !== i) {
+                        n = n % 2 === 0 ? (n / 2) : (n * 3 + 1)                        
                         if(n === i) {
-                            finded = true
                             res.push(i)
                         }
                     }
                 }
                 return res
             }
-            console.log('猜想：', collect())
-            
+            console.log('猜想：', collect())           
+        }
+        { //06 数组思考问题的扫地机器人
+            let method = 0
+            let store = {'0,0': true,steps:[[0, 0]]}
+            function methods(store) {
+                let max_length = store.steps.length 
+                if(max_length === 13) {
+                    method+=1
+                }
+                [[0,1], [0,-1], [1,0], [-1,0]].forEach((step) => {
+                    let last_step = store.steps[max_length - 1].slice()
+                    let next_step = [last_step[0] + step[0], last_step[1] + step[1]]
+                    if(!store[next_step.toString()]) {
+                        store[next_step.toString()] = true
+                        store.steps.push(next_step)
+                        methods(store)
+                    }
+                })
+                return method
+            } 
+            console.log('扫地：', methods(store)) 
         }
     </script>
 </body>
